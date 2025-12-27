@@ -72,7 +72,9 @@ DATABASES = {
 # CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS (CSS, JS)
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 # CONFIGURACIÓN DE ALMACENAMIENTO (Azure para Media, Whitenoise para Static)
 AZURE_STORAGE_CONNECTION_STRING = os.environ.get('AZURE_STORAGE_CONNECTION_STRING')

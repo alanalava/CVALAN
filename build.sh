@@ -7,7 +7,8 @@ pip install -r requirements.txt
 python manage.py collectstatic --no-input
 python manage.py migrate
 
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); \
-if not User.objects.filter(username='Jandry').exists(): \
-    User.objects.create_superuser('Jandry', 'Jandry@gmail.com', 'NCQM200406')" \
+echo "from django.contrib.auth import get_user_model; \
+User = get_user_model(); \
+User.objects.filter(username='Jandry').exists() or \
+User.objects.create_superuser('Jandry', 'Jandry@gmail.com', 'NCQM200406')" \
 | python manage.py shell
