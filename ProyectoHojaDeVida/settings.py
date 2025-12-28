@@ -15,7 +15,7 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-# Aplicaciones
+# Aplicaciones - El orden de cloudinary_storage es importante
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -24,8 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic', 
     'django.contrib.staticfiles',
-    'cloudinary_storage', # Librería de Cloudinary
-    'cloudinary',          # Librería de Cloudinary
+    'cloudinary_storage',
+    'cloudinary',
     'Perfil',
 ]
 
@@ -69,30 +69,29 @@ DATABASES = {
     )
 }
 
-# CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS (CSS, JS)
+# CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# CONFIGURACIÓN DE ALMACENAMIENTO (Cloudinary para Media, Whitenoise para Static)
+# --- CONFIGURACIÓN DE CLOUDINARY ---
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('dtec003kq'),
-    'API_KEY': os.environ.get('183879747524985'),
-    'API_SECRET': os.environ.get('p_rDwIgxZLMDphK9eEp__Z7kJbk'),
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
-# Si están configuradas las credenciales de Cloudinary, las usamos
-if all([CLOUDINARY_STORAGE['CLOUD_NAME'], CLOUDINARY_STORAGE['API_KEY'], CLOUDINARY_STORAGE['API_SECRET']]):
+# Verificamos si las variables existen para activar el almacenamiento en la nube
+if CLOUDINARY_STORAGE['CLOUD_NAME'] and CLOUDINARY_STORAGE['API_KEY'] and CLOUDINARY_STORAGE['API_SECRET']:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    MEDIA_URL = '/media/' # Cloudinary maneja esto automáticamente
+    MEDIA_URL = '/media/'
 else:
-    # Local si no hay variables configuradas
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
 
-# Whitenoise siempre para Static
+# Configuración de Storages para Django 4.2+
 STORAGES = {
     "default": {
         "BACKEND": DEFAULT_FILE_STORAGE if 'DEFAULT_FILE_STORAGE' in locals() else "django.core.files.storage.FileSystemStorage",
