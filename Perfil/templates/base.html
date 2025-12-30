@@ -127,7 +127,7 @@
     </div>
 
     <nav>
-        <a href="{% url 'perfil' %}" class="{% if request.path == '/' or request.path == '/perfil/' %}active{% endif %}">
+        <a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">
             <i class="fas fa-user"></i> Perfil
         </a>
 
@@ -135,7 +135,7 @@
             <i class="fas fa-briefcase"></i> Experiencia
         </a>
 
-        <a href="{% url 'educacion' %}" class="{% if '/educacion/' in request.path %}active{% endif %}">
+        <a href="{% url 'cursos' %}" class="{% if '/cursos/' in request.path %}active{% endif %}">
             <i class="fas fa-graduation-cap"></i> Cursos
         </a>
 
@@ -143,11 +143,11 @@
             <i class="fas fa-award"></i> Reconocimientos
         </a>
 
-        <a href="{% url 'productos_academicos' %}" class="{% if '/productos-academicos/' in request.path %}active{% endif %}">
+        <a href="{% url 'productos_academicos' %}" class="{% if '/productos_academicos/' in request.path %}active{% endif %}">
             <i class="fas fa-book"></i> Académicos
         </a>
 
-        <a href="{% url 'productos_laborales' %}" class="{% if '/productos-laborales/' in request.path %}active{% endif %}">
+        <a href="{% url 'productos_laborales' %}" class="{% if '/productos_laborales/' in request.path %}active{% endif %}">
             <i class="fas fa-code"></i> Laborales
         </a>
 
