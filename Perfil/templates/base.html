@@ -9,26 +9,247 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ... Pega aquí todo tu CSS original que tenías en el head ... */
-        /* Asegúrate de incluir el CSS que ya tenías */
-        :root { --sidebar-width: 280px; --primary: #2563eb; --primary-dark: #1d4ed8; --primary-light: rgba(37, 99, 235, 0.1); --sidebar-bg: #0f172a; --bg-main: #f8fafc; --text-main: #334155; --text-muted: #94a3b8; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg-main); display: flex; margin: 0; min-height: 100vh; color: var(--text-main); }
-        aside { width: var(--sidebar-width); background: var(--sidebar-bg); color: white; position: fixed; height: 100vh; padding: 2.5rem 1.5rem; display: flex; flex-direction: column; box-shadow: 4px 0 10px rgba(0,0,0,0.1); z-index: 100; overflow-y: auto; }
-        .identity-box { text-align: center; margin-bottom: 2rem; }
-        .avatar-container { position: relative; width: 100px; height: 100px; margin: 0 auto 1rem; }
-        .avatar { width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; font-weight: 700; text-transform: uppercase; color: white; border: 3px solid rgba(255, 255, 255, 0.2); }
-        .avatar-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.2); }
+        /* --- VARIABLES Y ESTILOS GLOBALES --- */
+        :root {
+            --sidebar-width: 280px; 
+            --primary: #2563eb;     
+            --primary-dark: #1d4ed8; 
+            --primary-light: rgba(37, 99, 235, 0.1); 
+            --sidebar-bg: #0f172a;   
+            --bg-main: #f8fafc;      
+            --text-main: #334155;    
+            --text-muted: #94a3b8;   
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; 
+            background: var(--bg-main);
+            display: flex;
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text-main);
+        }
+        
+        aside {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1); 
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        /* Scrollbar elegante para el menú */
+        aside::-webkit-scrollbar { width: 5px; }
+        aside::-webkit-scrollbar-track { background: transparent; }
+        aside::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+        .identity-box {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+        }
+
+        .avatar {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.8rem; font-weight: 700;
+            text-transform: uppercase;
+            color: white;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .avatar-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
         .user-name { font-weight: 700; font-size: 1.2rem; margin-bottom: 5px; letter-spacing: 0.5px; }
         .user-role { color: var(--text-muted); font-size: 0.95rem; font-weight: 400; }
+        
         .nav-container { width: 100%; flex-grow: 1; margin-top: 1rem; }
-        nav a { display: flex; align-items: center; gap: 15px; padding: 14px 20px; color: var(--text-muted); text-decoration: none; border-radius: 12px; margin-bottom: 8px; transition: all 0.3s; font-weight: 500; }
-        nav a:hover, nav a.active { background: rgba(255, 255, 255, 0.1); color: white; transform: translateX(5px); }
-        nav a.active { background: var(--primary); }
-        main { margin-left: var(--sidebar-width); flex: 1; padding: 3rem 4rem; }
-        .card { background: white; padding: 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05); margin-bottom: 30px; border: 1px solid rgba(0,0,0,0.04); }
-        .header-title { color: var(--primary); font-weight: 700; font-size: 1.3rem; display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; padding-bottom: 10px; border-bottom: 2px solid var(--bg-main); }
-        /* Media Queries */
-        @media (max-width: 768px) { body { flex-direction: column; } aside { width: 100%; height: auto; position: relative; } main { margin: 0; padding: 1.5rem; } }
+        
+        nav a {
+            display: flex; align-items: center; gap: 15px;
+            padding: 14px 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-weight: 500;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        nav a.active {
+            background: var(--primary);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Botón de descarga PDF */
+        .btn-pdf-container { text-align: center; margin-bottom: 1rem; }
+        .btn-pdf {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white; padding: 14px;
+            border-radius: 12px; border: none; width: 100%;
+            font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-pdf:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4); }
+
+        main {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 3rem 4rem;
+        }
+        
+        .card {
+            background: white; padding: 2.5rem; border-radius: 20px;
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05); 
+            margin-bottom: 30px; border: 1px solid rgba(0,0,0,0.04);
+            /* Evita que se rompa al imprimir */
+            break-inside: avoid;
+        }
+
+        .header-title {
+            color: var(--primary); font-weight: 700; font-size: 1.3rem;
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 1.5rem; padding-bottom: 10px;
+            border-bottom: 2px solid var(--bg-main);
+        }
+
+        /* --- RESPONSIVE WEB --- */
+        @media (max-width: 992px) { :root { --sidebar-width: 240px; } main { padding: 2rem; } }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            aside {
+                width: 100%; height: auto; position: relative;
+                padding: 1.5rem; flex-direction: row; flex-wrap: wrap;
+                justify-content: space-between; align-items: center;
+            }
+            .identity-box { margin: 0; display: flex; align-items: center; gap: 15px; text-align: left; }
+            .avatar-container { width: 60px; height: 60px; margin: 0; }
+            .user-name { font-size: 1.1rem; margin: 0; }
+            .btn-pdf { width: auto; margin: 0; padding: 10px 20px; font-size: 0.9rem;}
+            .nav-container { width: 100%; margin-top: 1.5rem; display: flex; overflow-x: auto; padding-bottom: 10px; gap: 10px; }
+            nav a { margin: 0; padding: 10px 15px; white-space: nowrap; flex-shrink: 0; }
+            main { margin: 0; padding: 1.5rem; }
+        }
+
+        /* =========================================
+           ESTILOS PARA GENERAR EL PDF / IMPRESIÓN
+           ========================================= */
+        @media print {
+            @page { 
+                size: A4; 
+                margin: 0cm; 
+            }
+            
+            body { 
+                display: block; 
+                background: white; 
+                color: #000;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+
+            /* Transformar la barra lateral en un encabezado superior elegante */
+            aside {
+                position: relative !important; 
+                width: 100% !important; 
+                height: auto !important;
+                background: var(--primary) !important; 
+                color: white !important;
+                padding: 20px 40px !important;
+                flex-direction: row !important; 
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                margin-bottom: 20px;
+                box-shadow: none !important;
+                border: none !important;
+            }
+
+            /* Ajustar identidad para el encabezado */
+            .identity-box { 
+                display: flex !important; 
+                flex-direction: row !important;
+                align-items: center !important; 
+                gap: 20px !important; 
+                text-align: left !important; 
+                margin: 0 !important;
+            }
+            
+            .avatar-container { 
+                width: 70px !important; 
+                height: 70px !important; 
+                margin: 0 !important; 
+                border: 2px solid white !important;
+            }
+
+            .user-name { font-size: 22px !important; color: white !important; margin: 0 !important; }
+            .user-role { color: rgba(255,255,255,0.9) !important; font-size: 14px !important; }
+
+            /* OCULTAR ELEMENTOS QUE NO DEBEN SALIR EN EL PDF */
+            .nav-container, 
+            .btn-pdf-container, 
+            .btn-pdf,
+            .admin-link, 
+            button, 
+            nav { 
+                display: none !important; 
+            }
+
+            /* Ajustar el contenido principal */
+            main { 
+                margin: 0 !important; 
+                padding: 0 40px !important; 
+                width: 100% !important;
+            }
+            
+            /* Tarjetas limpias para impresión */
+            .card { 
+                box-shadow: none !important; 
+                border: 1px solid #ddd !important; 
+                break-inside: avoid; /* CLAVE: No partir tarjetas entre hojas */
+                page-break-inside: avoid;
+                margin-bottom: 20px !important;
+                padding: 20px !important;
+            }
+
+            /* Ajustes de tipografía para lectura en papel */
+            h2, h3 { color: #000 !important; }
+            p { color: #333 !important; }
+            a { text-decoration: none !important; color: #000 !important; }
+            
+            /* Si hay scrollbars ocultos, quitarlos */
+            * { overflow: visible !important; }
+        }
     </style>
 </head>
 <body>
@@ -52,6 +273,12 @@
             </div>
         </div>
         
+        <div class="btn-pdf-container">
+            <button onclick="window.print()" class="btn-pdf">
+                <i class="fas fa-file-pdf"></i> Descargar PDF
+            </button>
+        </div>
+
         <div class="nav-container">
             <nav>
                 <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
