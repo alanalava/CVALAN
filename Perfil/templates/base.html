@@ -67,7 +67,7 @@
         .user-name { font-weight: 700; font-size: 1.2rem; margin-bottom: 5px; }
         .user-role { color: var(--text-muted); font-size: 0.95rem; }
         
-        /* --- ARREGLO 1: BOTÓN CENTRADO Y PEQUEÑO --- */
+        /* --- BOTÓN CENTRADO Y PEQUEÑO --- */
         .btn-pdf-container { 
             display: flex; 
             justify-content: center; 
@@ -138,7 +138,7 @@
             main { margin: 0; padding: 1.5rem; }
         }
 
-        /* --- ARREGLO 2: PDF SIN MÁRGENES BLANCOS GRANDES --- */
+        /* --- ESTILOS DE IMPRESIÓN (PDF) --- */
         @media print {
             @page { size: A4; margin: 0cm; }
             
@@ -153,7 +153,10 @@
             }
             
             .identity-box { display: flex !important; align-items: center !important; gap: 20px !important; text-align: left !important; margin: 0 !important; }
-            .avatar-container { width: 70px !important; height: 70px !important; margin: 0 !important; border: 2px solid white !important; }
+            
+            /* CORRECCIÓN: Se eliminó el borde blanco que causaba el recuadro */
+            .avatar-container { width: 70px !important; height: 70px !important; margin: 0 !important; }
+            
             .user-name { font-size: 22px !important; color: white !important; margin: 0 !important; }
             
             .nav-container, .btn-pdf-container, button, nav { display: none !important; }
@@ -220,7 +223,6 @@
                 <a href="{% url 'experiencia' %}" class="{% if 'experiencia' in request.path %}active{% endif %}">
                     <i class="fas fa-briefcase"></i> Experiencia Laboral
                 </a>
-
                 <a href="{% url 'productos_academicos' %}" class="{% if 'productos_academicos' in request.path %}active{% endif %}">
                     <i class="fas fa-book"></i> Prod. Académicos
                 </a>
