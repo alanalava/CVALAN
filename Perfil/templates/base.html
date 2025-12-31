@@ -132,7 +132,6 @@
             background: white; padding: 2.5rem; border-radius: 20px;
             box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05); 
             margin-bottom: 30px; border: 1px solid rgba(0,0,0,0.04);
-            /* Evita que se rompa al imprimir */
             break-inside: avoid;
         }
 
@@ -161,93 +160,20 @@
             main { margin: 0; padding: 1.5rem; }
         }
 
-        /* =========================================
-           ESTILOS PARA GENERAR EL PDF / IMPRESIÓN
-           ========================================= */
+        /* ESTILOS DE IMPRESIÓN (Por si acaso alguien imprime esta página directamente) */
         @media print {
-            @page { 
-                size: A4; 
-                margin: 0cm; 
-            }
-            
-            body { 
-                display: block; 
-                background: white; 
-                color: #000;
-                -webkit-print-color-adjust: exact; 
-                print-color-adjust: exact;
-            }
-
-            /* Transformar la barra lateral en un encabezado superior elegante */
-            aside {
-                position: relative !important; 
-                width: 100% !important; 
-                height: auto !important;
-                background: var(--primary) !important; 
-                color: white !important;
-                padding: 20px 40px !important;
-                flex-direction: row !important; 
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                margin-bottom: 20px;
-                box-shadow: none !important;
-                border: none !important;
-            }
-
-            /* Ajustar identidad para el encabezado */
-            .identity-box { 
-                display: flex !important; 
-                flex-direction: row !important;
-                align-items: center !important; 
-                gap: 20px !important; 
-                text-align: left !important; 
-                margin: 0 !important;
-            }
-            
-            .avatar-container { 
-                width: 70px !important; 
-                height: 70px !important; 
-                margin: 0 !important; 
-                border: 2px solid white !important;
-            }
-
+            @page { size: A4; margin: 0cm; }
+            body { display: block; background: white; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            aside { position: relative !important; width: 100% !important; height: auto !important; background: var(--primary) !important; color: white !important; padding: 20px 40px !important; flex-direction: row !important; display: flex !important; align-items: center !important; justify-content: space-between !important; margin-bottom: 20px; box-shadow: none !important; border: none !important; }
+            .identity-box { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 20px !important; text-align: left !important; margin: 0 !important; }
+            .avatar-container { width: 70px !important; height: 70px !important; margin: 0 !important; border: 2px solid white !important; }
             .user-name { font-size: 22px !important; color: white !important; margin: 0 !important; }
             .user-role { color: rgba(255,255,255,0.9) !important; font-size: 14px !important; }
-
-            /* OCULTAR ELEMENTOS QUE NO DEBEN SALIR EN EL PDF */
-            .nav-container, 
-            .btn-pdf-container, 
-            .btn-pdf,
-            .admin-link, 
-            button, 
-            nav { 
-                display: none !important; 
-            }
-
-            /* Ajustar el contenido principal */
-            main { 
-                margin: 0 !important; 
-                padding: 0 40px !important; 
-                width: 100% !important;
-            }
-            
-            /* Tarjetas limpias para impresión */
-            .card { 
-                box-shadow: none !important; 
-                border: 1px solid #ddd !important; 
-                break-inside: avoid; /* CLAVE: No partir tarjetas entre hojas */
-                page-break-inside: avoid;
-                margin-bottom: 20px !important;
-                padding: 20px !important;
-            }
-
-            /* Ajustes de tipografía para lectura en papel */
+            .nav-container, .btn-pdf-container, .btn-pdf, .admin-link, button, nav { display: none !important; }
+            main { margin: 0 !important; padding: 0 40px !important; width: 100% !important; }
+            .card { box-shadow: none !important; border: 1px solid #ddd !important; break-inside: avoid; page-break-inside: avoid; margin-bottom: 20px !important; padding: 20px !important; }
             h2, h3 { color: #000 !important; }
-            p { color: #333 !important; }
             a { text-decoration: none !important; color: #000 !important; }
-            
-            /* Si hay scrollbars ocultos, quitarlos */
             * { overflow: visible !important; }
         }
     </style>
@@ -274,9 +200,9 @@
         </div>
         
         <div class="btn-pdf-container">
-            <button onclick="window.print()" class="btn-pdf">
-                <i class="fas fa-file-pdf"></i> Descargar PDF
-            </button>
+            <a href="{% url 'cv_completo' %}" target="_blank" class="btn-pdf" style="text-decoration: none;">
+                <i class="fas fa-file-pdf"></i> Generar CV Completo
+            </a>
         </div>
 
         <div class="nav-container">
